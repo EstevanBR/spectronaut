@@ -1,0 +1,17 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/GZEMO2.obj-984681be73548e3d96808a1e0c4af8d3.mesh"
+
+[deps]
+
+files=[ "res://.import/GZEMO2.obj-984681be73548e3d96808a1e0c4af8d3.mesh" ]
+
+source_file="res://obj/GZEMO2.obj"
+dest_files=[ "res://.import/GZEMO2.obj-984681be73548e3d96808a1e0c4af8d3.mesh", "res://.import/GZEMO2.obj-984681be73548e3d96808a1e0c4af8d3.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
