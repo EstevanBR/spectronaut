@@ -1,45 +1,93 @@
 extends Spatial
 
+onready var _shade = Color(1,1,1,1) setget set_shade, get_shade
 onready var level_root = get_parent()
-onready var cam = get_parent().get_node("CameraRoot/Camera")
+onready var cam_root = get_node("../CameraRoot")
+onready var cam = cam_root.get_node("Camera")
+onready var _last_position = get_translation()
+onready var meshes = get_node("Meshes")
 
-var _walk_speed = 0.1
+var _walk_speed = 0.2
 var _walk_progress = 0.0
 
 func _ready():
 	set_translation(level_root.get_node("SpawnPoint").get_translation())
 	set_process(true)
+	set_shade(_shade)
+	_pull_towards_cam()
 
 func _process(delta):
 	_walk_progress += delta
 	if _walk_progress > _walk_speed:
 		_walk_progress = 0.0
-		_check_input(delta)
+		_last_position = get_translation()
+		_check_input()
 
 func walk():
-	$AnimationPlayer.play("Walk")
+	if $AnimationPlayer.current_animation != "Walk":
+		$AnimationPlayer.play("Walk")
 
 func idle():
-	$AnimationPlayer.play("Idle")
+	if $AnimationPlayer.current_animation != "Idle":
+		$AnimationPlayer.play("Idle")
 
 func jump():
 	$AnimationPlayer.play("Walk", -1, 0.0)
 	$AnimationPlayer.seek(0.25, true)
 
-func _check_input(delta):
+func _check_input():
 	var input_vector = Vector3()
 	if Input.is_action_pressed("ui_left") && Input.is_action_pressed("ui_up"):
-		input_vector = Vector3(1,0,0)
-	if Input.is_action_pressed("ui_left") && Input.is_action_pressed("ui_down"):
-		input_vector = Vector3(0,0,-1)
-	if Input.is_action_pressed("ui_right") && Input.is_action_pressed("ui_up"):
-		input_vector = Vector3(0,0,1)
-	if Input.is_action_pressed("ui_right") && Input.is_action_pressed("ui_down"):
 		input_vector = Vector3(-1,0,0)
-	_move(input_vector, delta)
+	elif Input.is_action_pressed("ui_left") && Input.is_action_pressed("ui_down"):
+		input_vector = Vector3(0,0,1)
+	elif Input.is_action_pressed("ui_right") && Input.is_action_pressed("ui_up"):
+		input_vector = Vector3(0,0,-1)
+	elif Input.is_action_pressed("ui_right") && Input.is_action_pressed("ui_down"):
+		input_vector = Vector3(1,0,0)
+	else:
+		idle()
+		return
+	input_vector = input_vector.rotated(Vector3(0,1,0), deg2rad(cam_root.get_rotation_index() * 90))
+	input_vector = input_vector.round()
+	
+	var t = meshes.get_global_transform()
+	
+	t = t.looking_at(
+		t.origin - input_vector, \
+		Vector3(0,1,0)
+	)
+	meshes.set_global_transform(t)
+	var v = get_node("../ColorTiles").world_to_map(get_translation())
+	var result = level_root.check_can_move(v+input_vector, _shade)
+	if result.can_move:
+		walk()
+		var l = result.color_locations.back()
+		set_translation(get_node("../ColorTiles").map_to_world(l.x, l.y, l.z))
+	else:
+		idle()
+		print("couldn't move")
 
-func _move(input_vector, delta):
-	var tile_position = get_node("../RedGridMap").world_to_map(get_translation())
-	print(var2str(tile_position))
-	translate(input_vector * delta * 64.0)
-	#breakpoint
+func set_shade(shade):
+	_shade = shade
+	get_node("Meshes/MeshInstance").get_surface_material(0).set("albedo_color", _shade)
+	get_node("Meshes/MeshInstance2").get_surface_material(0).set("albedo_color", _shade)
+	get_node("Meshes/MeshInstance3").get_surface_material(0).set("albedo_color", _shade)
+
+func get_shade():
+	return _shade
+
+func _pull_towards_cam():
+	var t = get_global_transform()
+	t.origin += cam_root.get_offset() * 20
+	t.basis = meshes.get_global_transform().basis
+	meshes.set_global_transform(t)
+
+func _on_CameraRoot_rotation_end():
+	_pull_towards_cam()
+	pass # replace with function body
+
+
+func _on_CameraRoot_rotation_start():
+	meshes.set_global_transform(get_global_transform())
+	pass # replace with function body

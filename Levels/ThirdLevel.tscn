@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Levels/LEVEL.tscn" type="PackedScene" id=1]
+
+[node name="ThirdLevel" instance=ExtResource( 1 )]
+
+_next_level_name = "FourthLevel"
+shade = Color( 1, 0, 0, 1 )
+
+[node name="ColorTiles" parent="." index="0"]
+
+visible = true
+data = {
+"cells": PoolIntArray( 0, 0, 1, 5, 0, 1, -262144, 1, 1, -196611, 1, 1, -196610, 1, 1, -196609, 1, 1, -262142, 4, 3, -262141, 4, 3, -262140, 4, 3, -262139, 4, 3, 262149, 65529, 3, 262150, 65529, 3, 262151, 65529, 3, 262152, 65529, 3, 327673, 65532, 4, 327674, 65532, 1, 327675, 65532, 1, 327676, 65532, 1, 327677, 65532, 1, 0, 65533, 1, 5, 65533, 1, 0, 65534, 1, 5, 65534, 1, 0, 65535, 1, 5, 65535, 1 )
+}
+
+[node name="FLATColorTiles" parent="." index="1"]
+
+data = {
+"cells": PoolIntArray(  )
+}
+
+[node name="EditorCamera" parent="." index="8"]
+
+_time = 1.0
+_index = 1
+
+

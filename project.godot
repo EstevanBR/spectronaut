@@ -10,14 +10,16 @@ config_version=3
 
 [application]
 
-config/name="KinderJam1"
-run/main_scene="res://Intro.tscn"
+config/name="Spectronaut"
+run/main_scene="res://Levels/FirstLevel.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+LevelSwitcher="*res://Levels/LevelSwitcher.gd"
 
 [display]
 
-window/size/width=640
-window/size/height=640
 window/dpi/allow_hidpi=true
 
 [input]
@@ -25,4 +27,8 @@ window/dpi/allow_hidpi=true
 rotate_left=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
  ]
 rotate_right=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+ ]
+print_cam_offset=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":80,"unicode":0,"echo":false,"script":null)
+ ]
+change_color=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
  ]
