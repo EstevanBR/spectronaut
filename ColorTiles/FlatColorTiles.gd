@@ -1,5 +1,7 @@
 extends GridMap
 
+#const CellWithOrientation = preload("res://CellWithOrientation.gd")
+
 enum COLORS {
 	WHITE,
 	RED,
@@ -51,3 +53,7 @@ func _fill():
 				id = COLORS.RAINBOW
 		#breakpoint
 		set_cell_item(pos.x, pos.y, pos.z, id)
+	for cell in color_tiles_unflattened.get_used_cells():
+		var o = color_tiles_unflattened.get_cell_item_orientation(cell.x, cell.y, cell.z)
+		if o != 0 && o != -1:
+			set_cell_item(cell.x, cell.y, cell.z, color_tiles_unflattened.get_cell_item(cell.x, cell.y, cell.z), o)

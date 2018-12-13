@@ -1,5 +1,7 @@
 extends GridMap
 
+#const CellWithOrientation = preload("res://CellWithOrientation.gd")
+
 enum COLORS {
 	WHITE,
 	RED,
@@ -102,12 +104,12 @@ class FilteredCells:
 		#positions.append(v)
 		var dict = as_dict()
 		for key in dict:
-			for color in dict[key]:
-				var depth = v.z - color.z
-				if color + (off * depth) == v:
-					positions.append(color)
-				if color + (off * -depth) == v:
-					positions.append(color)
+			for cell in dict[key]:
+				var depth = v.z - cell.z
+				if cell + (off * depth) == v:
+					positions.append(cell)
+				if cell + (off * -depth) == v:
+					positions.append(cell)
 		positions.sort_custom(PositionSort.new(), 'sort')
 		return positions
 
@@ -118,6 +120,9 @@ func get_filtered(cells = []):
 		cells = get_used_cells()
 
 	for cell in cells:
+		var orientation = get_cell_item_orientation(cell.x, cell.y, cell.z)
+		if orientation != 0:
+			continue
 		match get_cell_item(cell.x, cell.y, cell.z):
 			WHITE:   filtered.white.append(cell)
 			RED:     filtered.red.append(cell)
@@ -134,6 +139,8 @@ func get_filtered(cells = []):
 
 func _on_CameraRoot_rotation_end():
 	set_visible(false)
+	pass
 
 func _on_CameraRoot_rotation_start():
 	set_visible(true)
+	pass

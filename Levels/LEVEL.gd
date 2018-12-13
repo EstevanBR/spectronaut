@@ -1,5 +1,7 @@
 extends Spatial
 
+#const CellWithOrientation = preload("res://CellWithOrientation.gd")
+
 export(String) var _next_level_name
 
 signal level_completed
@@ -37,6 +39,7 @@ func check_can_move(v, source_color):
 	var cells = $ColorTiles.get_filtered() #.flattened_to_z(off, v.z)
 	
 	for i in range(-20,20):
+		#var voff = CellWithOrientation.new(v + (off * -i), 0)
 		var voff = v + (off * -i)
 		
 		if dest_color.r < 0.01 \
