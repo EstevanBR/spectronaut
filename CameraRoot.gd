@@ -22,7 +22,7 @@ var _rotations = [
 				 Transform(Quat(Vector3(0,1,0), deg2rad((90*3) % 360 )))
 				]
 
-var _rotation_speed = 0.5
+var _rotation_speed = 0.75
 var _progress = _rotation_speed
 
 var _rotation_index = 0
@@ -45,13 +45,16 @@ func _process(delta):
 	if _progress < _rotation_speed:
 		var t = get_transform()
 		var s = Quat(_rotations[_rotation_index].basis)
-		var slerpd = Quat(t.basis).slerp(s, clamp(_progress / _rotation_speed, 0, 1.0))
+		var ratio = clamp(_progress / _rotation_speed, 0, 1.0)
+		var slerpd = Quat(t.basis).slerp(s, ratio)
+		Music.pitch_scale = min(1.0, ratio * 4.0 + 0.33)
 		set_transform(Transform(slerpd))
 	else:
 		if _rotating == true:
 			_rotating = false
 			emit_signal("rotation_end")
 		set_transform(Transform(Quat(_rotations[_rotation_index].basis)))
+		Music.pitch_scale = 1
 	set_translation(get_node("../GZEMO").get_translation())
 
 func _input(event):
@@ -76,6 +79,6 @@ func _rotate_right():
 
 func get_offset():
 	var g_origin = $Camera.get_global_transform().origin
-	print("g_origin: " + var2str(g_origin / g_origin.abs()))
-	return g_origin / g_origin.abs()
+	#print("g_origin: " + var2str(g_origin / g_origin.abs()))
+	return (g_origin / g_origin.abs()).round()
 

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/poly.ogg-d17c2fc4d4d555f4ef57a3b8be355040.oggstr"
+
+[deps]
+
+source_file="res://CEOL/poly.ogg"
+dest_files=[ "res://.import/poly.ogg-d17c2fc4d4d555f4ef57a3b8be355040.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

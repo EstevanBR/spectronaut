@@ -85,9 +85,9 @@ adjustment_enabled = false
 adjustment_brightness = 1.0
 adjustment_contrast = 1.0
 adjustment_saturation = 1.0
-_sections_unfolded = [ "Background", "Glow" ]
+_sections_unfolded = [ "Adjustments", "Background", "Glow" ]
 
-[node name="LevelRoot" type="Spatial" index="0"]
+[node name="LevelRoot" type="Spatial"]
 
 script = ExtResource( 1 )
 _next_level_name = null
@@ -155,7 +155,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="EditorCamera" type="Camera" parent="." index="8"]
 
-transform = Transform( -0.707107, 0.408254, -0.577346, 0, 0.81649, 0.577359, 0.707107, 0.408254, -0.577346, -45, 45, -45 )
+transform = Transform( -0.707107, -0.408254, 0.577346, 0, 0.81649, 0.577359, -0.707107, 0.408254, -0.577346, 45, 45, -45 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -170,7 +170,7 @@ near = 0.05
 far = 100.0
 script = ExtResource( 6 )
 _time = 1.0
-_index = 2
+_index = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="." index="9"]
 
@@ -218,16 +218,16 @@ size_flags_vertical = 1
 texture = ExtResource( 7 )
 stretch_mode = 0
 
-[connection signal="rotation_end" from="CameraRoot" to="ColorTiles" method="_on_CameraRoot_rotation_end"]
+[connection signal="rotation_end" from="CameraRoot" to="FLATColorTiles" method="_on_CameraRoot_rotation_end"]
 
 [connection signal="rotation_end" from="CameraRoot" to="GZEMO" method="_on_CameraRoot_rotation_end"]
 
-[connection signal="rotation_end" from="CameraRoot" to="FLATColorTiles" method="_on_CameraRoot_rotation_end"]
+[connection signal="rotation_end" from="CameraRoot" to="ColorTiles" method="_on_CameraRoot_rotation_end"]
 
-[connection signal="rotation_start" from="CameraRoot" to="ColorTiles" method="_on_CameraRoot_rotation_start"]
+[connection signal="rotation_start" from="CameraRoot" to="FLATColorTiles" method="_on_CameraRoot_rotation_start"]
 
 [connection signal="rotation_start" from="CameraRoot" to="GZEMO" method="_on_CameraRoot_rotation_start"]
 
-[connection signal="rotation_start" from="CameraRoot" to="FLATColorTiles" method="_on_CameraRoot_rotation_start"]
+[connection signal="rotation_start" from="CameraRoot" to="ColorTiles" method="_on_CameraRoot_rotation_start"]
 
 

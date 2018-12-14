@@ -26,6 +26,7 @@ func _ready():
 	get_node("GZEMO").set_shade(shade)
 	connect("level_completed", LevelSwitcher, "_on_level_complete")
 	$ColorTiles.set_visible(false)
+	assert(shade != null)
 
 func _process(delta):
 	pass

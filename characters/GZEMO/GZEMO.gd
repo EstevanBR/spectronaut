@@ -66,7 +66,7 @@ func _check_input():
 		set_translation(get_node("../ColorTiles").map_to_world(l.x, l.y, l.z))
 	else:
 		idle()
-		print("couldn't move")
+		#print("couldn't move")
 
 func set_shade(shade):
 	_shade = shade

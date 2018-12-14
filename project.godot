@@ -11,16 +11,17 @@ config_version=3
 [application]
 
 config/name="Spectronaut"
-run/main_scene="res://Levels/FirstLevel.tscn"
+run/main_scene="res://Levels/LEVEL_1.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 LevelSwitcher="*res://Levels/LevelSwitcher.gd"
+Music="*res://AudioStreamPlayer.tscn"
 
 [display]
 
-window/dpi/allow_hidpi=true
+window/vsync/use_vsync=false
 
 [input]
 

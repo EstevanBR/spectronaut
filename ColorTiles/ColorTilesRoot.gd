@@ -46,7 +46,7 @@ class FilteredCells:
 			for cell in as_dict()[letter]:
 				var z_off = cell.z - z
 				var flat_cell = cell - (off * z_off * sign(off.z))
-				
+				flat_cell = flat_cell.round()
 				if !colors.has(flat_cell):
 					colors[flat_cell] = Color()
 				
@@ -120,6 +120,7 @@ func get_filtered(cells = []):
 		cells = get_used_cells()
 
 	for cell in cells:
+		cell = cell.round()
 		var orientation = get_cell_item_orientation(cell.x, cell.y, cell.z)
 		if orientation != 0:
 			continue
