@@ -38,40 +38,44 @@ class FilteredCells:
 			CYAN:cyan,
 			YELLOW:yellow
 		}
-	func flattened_to_z( off, z ):
+	func cell_flattened_to_z(v, o, z):
+		var z_off = v.z - z
+		var flat_cell = v - (o * z_off * sign(o.z))
+		return flat_cell
+	func cells_flattened_to_z( off, z ):
 		var flattened = get_script().new()
 		var colors = {}
 		
 		for letter in as_dict():
 			for cell in as_dict()[letter]:
-				var z_off = cell.z - z
-				var flat_cell = cell - (off * z_off * sign(off.z))
-				flat_cell = flat_cell.round()
+				#var z_off = cell.z - z
+				var flat_cell = cell_flattened_to_z(cell, off, z)
+				#flat_cell = flat_cell.round()
 				if !colors.has(flat_cell):
 					colors[flat_cell] = Color()
 				
 				match letter:
 					RED:
 						colors[flat_cell].r = 1
-						if flattened.green.count(flat_cell):
+						if flattened.green.has(flat_cell):
 							flattened.yellow.append(flat_cell)
-						elif flattened.blue.count(flat_cell):
+						elif flattened.blue.has(flat_cell):
 							flattened.magenta.append(flat_cell)
 						else:
 							flattened.red.append(flat_cell)
 					GREEN:
 						colors[flat_cell].g = 1
-						if flattened.blue.count(flat_cell):
+						if flattened.blue.has(flat_cell):
 							flattened.cyan.append(flat_cell)
-						elif flattened.red.count(flat_cell):
+						elif flattened.red.has(flat_cell):
 							flattened.yellow.append(flat_cell)
 						else:
 							flattened.green.append(flat_cell)
 					BLUE:
 						colors[flat_cell].b = 1
-						if flattened.red.count(flat_cell):
+						if flattened.red.has(flat_cell):
 							flattened.magenta.append(flat_cell)
-						elif flattened.green.count(flat_cell):
+						elif flattened.green.has(flat_cell):
 							flattened.cyan.append(flat_cell)
 						else:
 							flattened.blue.append(flat_cell)
@@ -81,6 +85,8 @@ class FilteredCells:
 					RAINBOW:
 						colors[flat_cell] = Color(-1,-1,-1)
 						flattened.rainbow.append(flat_cell)
+					_:
+						assert(false)
 		return colors
 		
 	func at_position(v):
@@ -106,10 +112,10 @@ class FilteredCells:
 		for key in dict:
 			for cell in dict[key]:
 				var depth = v.z - cell.z
-				if cell + (off * depth) == v:
+				if cell + (off * depth) == v && positions.has(cell) == false:
 					positions.append(cell)
-#				if cell + (off * -depth) == v:
-#					positions.append(cell)
+				if cell + (off * -depth) == v && positions.has(cell) == false:
+					positions.append(cell)
 		positions.sort_custom(PositionSort.new(), 'sort')
 		return positions
 

@@ -47,7 +47,7 @@ func _process(delta):
 		var s = Quat(_rotations[_rotation_index].basis)
 		var ratio = clamp(_progress / _rotation_speed, 0, 1.0)
 		var slerpd = Quat(t.basis).slerp(s, ratio)
-		Music.pitch_scale = min(1.0, ratio * 4.0 + 0.33)
+		Music.pitch_scale = min(1.0, ratio * 2.0 + 0.33)
 		set_transform(Transform(slerpd))
 	else:
 		if _rotating == true:

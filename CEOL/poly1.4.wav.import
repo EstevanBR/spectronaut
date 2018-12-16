@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/poly1.4.wav-908ff644516a313881cb739dee8bf8b6.sample"
+
+[deps]
+
+source_file="res://CEOL/poly1.4.wav"
+dest_files=[ "res://.import/poly1.4.wav-908ff644516a313881cb739dee8bf8b6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

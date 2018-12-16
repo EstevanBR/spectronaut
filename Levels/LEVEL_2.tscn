@@ -20,11 +20,6 @@ data = {
 "cells": PoolIntArray(  )
 }
 
-[node name="EditorCamera" parent="." index="8"]
-
-transform = Transform( 0.707107, 0.408254, -0.577346, 0, 0.81649, 0.577359, 0.707107, -0.408254, 0.577346, -45, 45, 45 )
-_index = 3
-
 [node name="RichTextLabel" parent="." index="9"]
 
 margin_top = -25.0

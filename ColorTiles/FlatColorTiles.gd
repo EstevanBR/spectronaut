@@ -28,7 +28,7 @@ func _on_CameraRoot_rotation_start():
 
 func _fill():
 	var z = color_tiles_unflattened.world_to_map( gzemo.get_translation() ).z
-	var flattened = color_tiles_unflattened.get_filtered().flattened_to_z(
+	var flattened = color_tiles_unflattened.get_filtered().cells_flattened_to_z(
 		cam_root.get_offset(),
 		z
 	)#.as_dict()

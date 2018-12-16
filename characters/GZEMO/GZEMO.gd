@@ -6,9 +6,10 @@ onready var cam_root = get_node("../CameraRoot")
 onready var cam = cam_root.get_node("Camera")
 onready var _last_position = get_translation()
 onready var meshes = get_node("Meshes")
-var _ci = 0
+#var _ci = 0
+var _real_position
 
-var _walk_speed = 0.2
+var _walk_speed = 0.15
 var _walk_progress = 0.0
 
 func _ready():
@@ -63,8 +64,11 @@ func _check_input():
 	var result = level_root.check_can_move(v+input_vector, _shade)
 	if result.can_move:
 		walk()
-		var l = result.color_locations.front()
-		print("l: " + var2str(l))
+		if result.color_locations.size() > 1:
+			breakpoint
+		var l = result.flat
+		_real_position = result.color_locations.front()
+		#print("l: " + var2str(l))
 		set_translation(get_node("../ColorTiles").map_to_world(l.x, l.y, l.z))
 	else:
 		idle()
@@ -84,14 +88,14 @@ func _pull_towards_cam():
 	t.origin += cam_root.get_offset() * 20
 	t.basis = meshes.get_global_transform().basis
 	#
-	#meshes.set_global_transform(t)
+	meshes.set_global_transform(t)
 	#
 
 func _on_CameraRoot_rotation_end():
 	_pull_towards_cam()
-	pass # replace with function body
 
 
 func _on_CameraRoot_rotation_start():
+	if (_real_position):
+		set_translation(get_node("../ColorTiles").map_to_world(_real_position.x, _real_position.y, _real_position.z))
 	meshes.set_global_transform(get_global_transform())
-	pass # replace with function body
