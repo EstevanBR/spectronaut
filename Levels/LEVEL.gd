@@ -38,30 +38,12 @@ func check_can_move(v, source_color):
 	var off = cam_root.get_offset()
 	
 	var cells = $ColorTiles.get_filtered() #.flattened_to_z(off, v.z)
+	var flat_cells = cells.flattened_to_z(off, v.z)
 	
-	for i in range(-20,20):
-		#var voff = CellWithOrientation.new(v + (off * -i), 0)
-		var voff = v + (off * -i)
-		
-		if dest_color.r < 0.01 \
-		&& cells.red.find(voff) != -1:
-			dest_color.r = 1
-		
-		if dest_color.g < 0.01 \
-		&& cells.green.find(voff) != -1:
-			dest_color.g = 1
-		
-		if dest_color.b < 0.01 \
-		&& cells.blue.find(voff) != -1:
-			dest_color.b = 1
-		
-		if cells.white.find(voff) != -1:
-			dest_color = Color(1,1,1)
-		
-		if cells.rainbow.find(voff) != -1:
-			dest_color = Color(1,1,1)
-			emit_signal("level_completed", name, _next_level_name)
-			#assert(false)
+	dest_color = flat_cells[v]
+	if dest_color == Color(0,0,0):
+		emit_signal("level_completed", name, _next_level_name)
+		dest_color = Color(1,1,1)
 	can_move = dest_color.r >= source_color.r && dest_color.g >= source_color.g && dest_color.b >= source_color.b
 	
 	#return CanMoveResult.new([v], can_move)

@@ -27,9 +27,10 @@ func _on_CameraRoot_rotation_start():
 	clear()
 
 func _fill():
+	var z = color_tiles_unflattened.world_to_map( gzemo.get_translation() ).z
 	var flattened = color_tiles_unflattened.get_filtered().flattened_to_z(
 		cam_root.get_offset(),
-		color_tiles_unflattened.world_to_map( gzemo.get_translation() ).z
+		z
 	)#.as_dict()
 	for pos in flattened:
 		var color = flattened[pos]

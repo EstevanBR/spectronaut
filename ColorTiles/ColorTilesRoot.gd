@@ -108,8 +108,8 @@ class FilteredCells:
 				var depth = v.z - cell.z
 				if cell + (off * depth) == v:
 					positions.append(cell)
-				if cell + (off * -depth) == v:
-					positions.append(cell)
+#				if cell + (off * -depth) == v:
+#					positions.append(cell)
 		positions.sort_custom(PositionSort.new(), 'sort')
 		return positions
 
