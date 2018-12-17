@@ -23,6 +23,7 @@ Beep="*res://Beep.tscn"
 [display]
 
 window/vsync/use_vsync=false
+window/stretch/mode="2d"
 
 [input]
 
@@ -33,4 +34,6 @@ rotate_right=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_na
 print_cam_offset=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":80,"unicode":0,"echo":false,"script":null)
  ]
 change_color=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+screenshot=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777255,"unicode":0,"echo":false,"script":null)
  ]
