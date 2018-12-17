@@ -23,7 +23,7 @@ func _ready():
 func _on_CameraRoot_rotation_end():
 	_fill()
 
-func _on_CameraRoot_rotation_start():
+func _on_CameraRoot_rotation_start(direction):
 	clear()
 
 func _fill():

@@ -86,7 +86,7 @@ class FilteredCells:
 						colors[flat_cell] = Color(-1,-1,-1)
 						flattened.rainbow.append(flat_cell)
 					_:
-						assert(false)
+						pass#assert(false)
 		return colors
 		
 	func at_position(v):
@@ -148,6 +148,6 @@ func _on_CameraRoot_rotation_end():
 	set_visible(false)
 	pass
 
-func _on_CameraRoot_rotation_start():
+func _on_CameraRoot_rotation_start(direction):
 	set_visible(true)
 	pass

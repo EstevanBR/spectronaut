@@ -3,6 +3,8 @@ extends Spatial
 signal rotation_start
 signal rotation_end
 
+var _t
+
 var _rotating = false
 func rotating():
 	return _rotating
@@ -22,7 +24,7 @@ var _rotations = [
 				 Transform(Quat(Vector3(0,1,0), deg2rad((90*3) % 360 )))
 				]
 
-var _rotation_speed = 0.75
+var _rotation_speed = 0.15
 var _progress = _rotation_speed
 
 var _rotation_index = 0
@@ -39,15 +41,20 @@ func _ready():
 	$Camera2.queue_free()
 	$Camera3.queue_free()
 	$Camera4.queue_free()
+	
+	connect("rotation_start", self, "_on_rotation_start")
+	connect("rotation_end", self, "_on_rotation_end")
 
 func _process(delta):
 	_progress += delta
 	if _progress < _rotation_speed:
-		var t = get_transform()
+		#var t = get_transform()
+		if (_t == null):
+			_t = get_transform()
 		var s = Quat(_rotations[_rotation_index].basis)
 		var ratio = clamp(_progress / _rotation_speed, 0, 1.0)
-		var slerpd = Quat(t.basis).slerp(s, ratio)
-		Music.pitch_scale = min(1.0, ratio * 2.0 + 0.33)
+		var slerpd = Quat(_t.basis).slerp(s, ratio)
+		Music.pitch_scale = min(1.0, ratio + 0.5)
 		set_transform(Transform(slerpd))
 	else:
 		if _rotating == true:
@@ -66,13 +73,13 @@ func _input(event):
 		_rotate_right()
 
 func _rotate_left():
-	emit_signal("rotation_start")
+	emit_signal("rotation_start", 0)
 	_rotating = true
 	_rotation_index += -1
 	_rotation_index %= _rotations.size()
 
 func _rotate_right():
-	emit_signal("rotation_start")
+	emit_signal("rotation_start", 1)
 	_rotating = true
 	_rotation_index += 1
 	_rotation_index %= _rotations.size()
@@ -82,3 +89,8 @@ func get_offset():
 	#print("g_origin: " + var2str(g_origin / g_origin.abs()))
 	return (g_origin / g_origin.abs()).round()
 
+func _on_rotation_start(direction):
+	_t = get_transform()
+
+func _on_rotation_end():
+	_t = null
