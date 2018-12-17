@@ -27,8 +27,12 @@ func _on_CameraRoot_rotation_start(direction):
 	clear()
 
 func _fill():
-	var z = color_tiles_unflattened.world_to_map( gzemo.get_translation() ).z
-	var flattened = color_tiles_unflattened.get_filtered().cells_flattened_to_z(
+	for cell in color_tiles_unflattened.get_used_cells():
+		var o = color_tiles_unflattened.get_cell_item_orientation(cell.x, cell.y, cell.z)
+		if o != 0 && o != -1:
+			set_cell_item(cell.x, cell.y, cell.z, color_tiles_unflattened.get_cell_item(cell.x, cell.y, cell.z), o)
+	var z = color_tiles_unflattened.world_to_map( gzemo.get_translation() ).y
+	var flattened = color_tiles_unflattened.get_filtered().cells_flattened_to_y(
 		cam_root.get_offset(),
 		z
 	)#.as_dict()
@@ -54,7 +58,4 @@ func _fill():
 				id = COLORS.RAINBOW
 		#breakpoint
 		set_cell_item(pos.x, pos.y, pos.z, id)
-	for cell in color_tiles_unflattened.get_used_cells():
-		var o = color_tiles_unflattened.get_cell_item_orientation(cell.x, cell.y, cell.z)
-		if o != 0 && o != -1:
-			set_cell_item(cell.x, cell.y, cell.z, color_tiles_unflattened.get_cell_item(cell.x, cell.y, cell.z), o)
+	

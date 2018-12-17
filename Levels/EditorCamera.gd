@@ -13,6 +13,8 @@ func _ready():
 		set_process(true)
 
 func _process(delta):
+	if _time <= 0:
+		return
 	_progress += delta
 	if _progress >= _time:
 		_progress = 0

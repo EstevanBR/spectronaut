@@ -17,7 +17,6 @@ func _ready():
 	set_translation(level_root.get_node("SpawnPoint").get_translation())
 	set_process(true)
 	set_shade(_shade)
-	_pull_towards_cam()
 
 func _process(delta):
 	_walk_progress += delta
@@ -39,6 +38,8 @@ func jump():
 	$AnimationPlayer.seek(0.25, true)
 
 func _check_input():
+	var v = get_node("../ColorTiles").world_to_map(get_translation())
+	
 	var input_vector = Vector3()
 	if Input.is_action_pressed("ui_left") && Input.is_action_pressed("ui_up"):
 		input_vector = Vector3(-1,0,0)
@@ -62,22 +63,24 @@ func _check_input():
 			Vector3(0,1,0)
 		)
 	meshes.set_global_transform(t)
-	var v = get_node("../ColorTiles").world_to_map(get_translation())
+	
+	#assert(input_vector.z == 0)
 	var result = level_root.check_can_move(v+input_vector, _shade)
 	if result.can_move:
 		walk()
 		var l = result.flat
 		_color_locations = result.color_locations
-		#if result.color_locations.size() > 1:
-		#	l = _real_position
-		#print("l: " + var2str(l))
 		set_translation(get_node("../ColorTiles").map_to_world(l.x, l.y, l.z))
+		Beep.stop()
 	else:
 		if input_vector.length() > 0:
+			Beep.pitch_scale = 1.0
 			Beep.play(0)
-		_color_locations = result.color_locationsd
+		else:
+			Beep.pitch_scale = 0.25
+			Beep.play(0)
+		_color_locations = result.color_locations
 		idle()
-		#print("couldn't move")
 
 func set_shade(shade):
 	_shade = shade
@@ -88,27 +91,21 @@ func set_shade(shade):
 func get_shade():
 	return _shade
 
-func _pull_towards_cam():
-	#return
-	var t = get_global_transform()
-	t.origin += cam_root.get_offset() * 20
-	t.basis = meshes.get_global_transform().basis
-	#
-	meshes.set_global_transform(t)
-	#
-
 func _on_CameraRoot_rotation_end():
-	_pull_towards_cam()
+	pass
 
 
 func _on_CameraRoot_rotation_start(direction):
 	assert(_color_locations != null)
+	
 	var rp
-	match(direction):
-		0: rp = _color_locations.front()
-		1: rp = _color_locations.back()
+	if _color_locations.size() == 0:
+		print("_color_locations.size() was 0")
+	else:
+		match(direction):
+			0: rp = _color_locations.front()
+			1: rp = _color_locations.back()
 	if rp:
 		set_translation(get_node("../ColorTiles").map_to_world(rp.x, rp.y, rp.z))
-	_color_locations = null
 	
 	meshes.set_global_transform(get_global_transform())

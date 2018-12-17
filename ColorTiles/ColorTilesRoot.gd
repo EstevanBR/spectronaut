@@ -15,7 +15,7 @@ enum COLORS {
 
 class PositionSort:
 	static func sort(a,b):
-		return a.z > b.z
+		return a.y > b.y
 
 class FilteredCells:
 	var red = []
@@ -38,18 +38,21 @@ class FilteredCells:
 			CYAN:cyan,
 			YELLOW:yellow
 		}
-	func cell_flattened_to_z(v, o, z):
-		var z_off = v.z - z
-		var flat_cell = v - (o * z_off * sign(o.z))
+	func cell_flattened_to_y(v, o, y):
+		var y_off = v.y - y
+		var flat_cell = v - (o * y_off * sign(o.y))
+		
+		#print("flat_cell: " + var2str(flat_cell))
+		
 		return flat_cell
-	func cells_flattened_to_z( off, z ):
+	func cells_flattened_to_y( off, y ):
 		var flattened = get_script().new()
 		var colors = {}
 		
 		for letter in as_dict():
 			for cell in as_dict()[letter]:
 				#var z_off = cell.z - z
-				var flat_cell = cell_flattened_to_z(cell, off, z)
+				var flat_cell = cell_flattened_to_y(cell, off, y)
 				#flat_cell = flat_cell.round()
 				if !colors.has(flat_cell):
 					colors[flat_cell] = Color()
@@ -87,6 +90,8 @@ class FilteredCells:
 						flattened.rainbow.append(flat_cell)
 					_:
 						pass#assert(false)
+		for c in colors:
+			assert(c.y == y)
 		return colors
 		
 	func at_position(v):
@@ -111,13 +116,16 @@ class FilteredCells:
 		var dict = as_dict()
 		for key in dict:
 			for cell in dict[key]:
-				var depth = v.z - cell.z
+				var depth = v.y - cell.y
 				if cell + (off * depth) == v && positions.has(cell) == false:
 					positions.append(cell)
 				if cell + (off * -depth) == v && positions.has(cell) == false:
 					positions.append(cell)
 		positions.sort_custom(PositionSort.new(), 'sort')
 		return positions
+
+func _ready():
+	set_visible(false)
 
 func get_filtered(cells = []):
 	var filtered = FilteredCells.new()

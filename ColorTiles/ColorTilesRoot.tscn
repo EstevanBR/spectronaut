@@ -7,7 +7,7 @@
 
 theme = ExtResource( 1 )
 cell_size = Vector3( 2, 2, 2 )
-cell_octant_size = 8
+cell_octant_size = 32
 cell_center_x = false
 cell_center_y = false
 cell_center_z = false
@@ -21,7 +21,7 @@ script = ExtResource( 2 )
 _sections_unfolded = [ "Cell", "Collision" ]
 __meta__ = {
 "_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, 1, 0 )
+"_editor_floor_": Vector3( 0, -1, 0 )
 }
 
 
