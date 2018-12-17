@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/beep.ogg-4aef6c5334e4ffcaf4d4e520af82ea0e.oggstr"
+
+[deps]
+
+source_file="res://CEOL/beep.ogg"
+dest_files=[ "res://.import/beep.ogg-4aef6c5334e4ffcaf4d4e520af82ea0e.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
