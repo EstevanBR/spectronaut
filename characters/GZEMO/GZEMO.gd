@@ -6,8 +6,7 @@ onready var cam_root = get_node("../CameraRoot")
 onready var cam = cam_root.get_node("Camera")
 onready var _last_position = get_translation()
 onready var meshes = get_node("Meshes")
-#var _ci = 0
-#var _real_position
+
 var _color_locations
 
 var _walk_speed = 0.15
