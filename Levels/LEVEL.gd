@@ -9,16 +9,16 @@ signal level_completed
 var progress = 0
 
 class CanMoveResult:
-	#func _init(l, m = false, f = null, n = null):
-	func _init(l, m, f):
+	func _init(l, f = null, n = null):
+	#func _init(l, m, f):
 		color_locations = l
-		can_move = m
+		#can_move = m
 		flat = f
-		#neighbors = n
+		neighbors = n
 	var color_locations
-	var can_move
+	#var can_move
 	var flat
-	#var neighbors
+	var neighbors
 
 onready var cam_root = $CameraRoot
 
@@ -44,13 +44,26 @@ func check_can_move(v, source_color):
 	var cells = $ColorTiles.get_filtered() #.flattened_to_z(off, v.z)
 	var flat_cells = cells.cells_flattened_to_y(off, v.y)
 	
+	var noffs = [
+		Vector3( 1, 0, 0),
+		Vector3(-1, 0, 0),
+		Vector3( 0, 0, 1),
+		Vector3( 0, 0,-1)
+	]
+	
+	var neighbors = {}
+	for noff in noffs:
+		var vnoff = v + noff
+		if flat_cells.has(vnoff):# && _can_move(source_color, flat_cells[v+noff]):
+			neighbors[noff] = flat_cells[vnoff]
+	
 	if flat_cells.has(v):
 		#print("flat_cells[" + var2str(v) + "]: " + var2str(flat_cells[v]))
 		dest_color = flat_cells[v]
 	if dest_color == Color(-1,-1,-1):
 		emit_signal("level_completed", name, _next_level_name)
 		dest_color = Color(1,1,1)
-	can_move = dest_color != null && dest_color.r >= source_color.r && dest_color.g >= source_color.g && dest_color.b >= source_color.b
+	#can_move = _can_move(source_color, dest_color)
 	
 	#return CanMoveResult.new([v], can_move)
 	var congruent_positions = cells.congruent_positions_at(v, off)
@@ -66,7 +79,10 @@ func check_can_move(v, source_color):
 #	if flat_cells.has(v + Vector3(0,0,-1)):
 #		neighbors.append(v + Vector3(0,0,-1))
 	#
-	return CanMoveResult.new(congruent_positions, can_move, flat)
+	return CanMoveResult.new(congruent_positions, flat, neighbors)
+
+func _can_move(from, to):
+	return to != null && to.r >= from.r && to.g >= from.g && to.b >= from.b
 
 func _input(event):
 	if event.is_action_pressed("print_cam_offset"):
