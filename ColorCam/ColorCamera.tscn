@@ -8,6 +8,7 @@
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
+_filter_color = null
 
 [node name="Camera" type="Camera" parent="." index="0"]
 

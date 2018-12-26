@@ -55,7 +55,7 @@ func check_can_move(v, source_color):
 	var neighbors = {}
 	for noff in noffs:
 		var vnoff = v + noff
-		if flat_cells.has(vnoff):# && _can_move(source_color, flat_cells[v+noff]):
+		if flat_cells.has(vnoff) && _can_move(source_color, flat_cells[v+noff]):
 			neighbors[noff] = flat_cells[vnoff]
 	
 	if flat_cells.has(v):
@@ -83,6 +83,7 @@ func check_can_move(v, source_color):
 	return CanMoveResult.new(congruent_positions, flat, neighbors)
 
 func _can_move(from, to):
+	to = Color(abs(to.r), abs(to.g), abs(to.b))
 	return to != null && to.r >= from.r && to.g >= from.g && to.b >= from.b
 
 func _input(event):

@@ -5,7 +5,7 @@
 [node name="LEVEL_6" instance=ExtResource( 1 )]
 
 _next_level_name = "LEVEL_7"
-shade = Color( 0, 0, 0, 1 )
+shade = Color( 1, 1, 1, 1 )
 
 [node name="ColorTiles" parent="." index="0"]
 
@@ -20,8 +20,9 @@ data = {
 "cells": PoolIntArray(  )
 }
 
-[node name="EditorCamera" parent="." index="8"]
+[node name="EditorCamera" parent="." index="6"]
 
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 far = 300.0
 _time = 0.0
 _index = 0

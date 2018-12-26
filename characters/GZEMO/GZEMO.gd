@@ -1,5 +1,7 @@
 extends Spatial
 
+signal gzemo_shade_changed(shade)
+
 onready var _shade = Color(1,1,1,1) setget set_shade, get_shade
 onready var level_root = get_parent()
 onready var cam_root = get_node("../CameraRoot")
@@ -16,6 +18,7 @@ func _ready():
 	set_translation(level_root.get_node("SpawnPoint").get_translation())
 	set_process(true)
 	set_shade(_shade)
+	emit_signal("gzemo_shade_changed")
 
 func _process(delta):
 	_walk_progress += delta
@@ -39,6 +42,7 @@ func jump():
 func _check_input():
 	var v = get_node("../ColorTiles").world_to_map(get_translation())
 	var result = level_root.check_can_move(v, _shade)
+	_color_locations = result.color_locations
 	
 	var input_vector = Vector3()
 	if Input.is_action_pressed("ui_left"):# && Input.is_action_pressed("ui_up"):
@@ -51,7 +55,7 @@ func _check_input():
 		input_vector += Vector3(0,0,1)
 	if input_vector.length() == 0:
 		idle()
-		#return
+		return
 	input_vector = input_vector.rotated(Vector3(0,1,0), deg2rad(( cam_root.get_rotation_index() * 90) + 45) )
 	input_vector = input_vector.round()
 	
@@ -68,8 +72,8 @@ func _check_input():
 	if [Vector3(1,0,0),Vector3(-1,0,0),Vector3(0,0,1),Vector3(0,0,-1)].has(cardinal_input):
 		for n in result.neighbors:
 			var rotated_neighbor = n.rotated(Vector3(0,1,0), deg2rad(-45)).round()
-			print("rotated_neighbor: " + var2str(rotated_neighbor))
-			print("  cardinal_input: " + var2str(cardinal_input))
+			#print("rotated_neighbor: " + var2str(rotated_neighbor))
+			#print("  cardinal_input: " + var2str(cardinal_input))
 			#result
 			#breakpoint
 			if (rotated_neighbor.x == cardinal_input.x && cardinal_input.x != 0) \
@@ -91,10 +95,10 @@ func _check_input():
 	
 	#assert(input_vector.z == 0)
 	#var result = level_root.check_can_move(v, _shade)
-	if result.neighbors.has(input_vector):
+	if result.neighbors.has(input_vector):#input_vector.length() == 0:
 		walk()
 		var l = v+input_vector
-		_color_locations = result.color_locations
+		#_color_locations = result.color_locations
 		set_translation(get_node("../ColorTiles").map_to_world(l.x, l.y, l.z))
 		Beep.stop()
 	else:
@@ -104,7 +108,7 @@ func _check_input():
 		else:
 			Beep.pitch_scale = 0.25
 			Beep.play(0)
-		_color_locations = result.color_locations
+		#_color_locations = result.color_locations
 		idle()
 
 func set_shade(shade):
@@ -112,6 +116,7 @@ func set_shade(shade):
 	get_node("Meshes/MeshInstance").get_surface_material(0).set("albedo_color", _shade)
 	get_node("Meshes/MeshInstance2").get_surface_material(0).set("albedo_color", _shade)
 	get_node("Meshes/MeshInstance3").get_surface_material(0).set("albedo_color", _shade)
+	emit_signal("gzemo_shade_changed", _shade)
 
 func get_shade():
 	return _shade
@@ -121,6 +126,10 @@ func _on_CameraRoot_rotation_end():
 
 
 func _on_CameraRoot_rotation_start(direction):
+	if _color_locations == null:
+		var v = get_node("../ColorTiles").world_to_map(get_translation())
+		var result = level_root.check_can_move(v, _shade)
+		_color_locations = result.color_locations
 	assert(_color_locations != null)
 	
 	var rp

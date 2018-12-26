@@ -19,6 +19,7 @@ config/icon="res://icon.png"
 LevelSwitcher="*res://Levels/LevelSwitcher.gd"
 Music="*res://AudioStreamPlayer.tscn"
 Beep="*res://Beep.tscn"
+Fade="*res://Levels/Fade.tscn"
 
 [display]
 

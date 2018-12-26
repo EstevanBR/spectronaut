@@ -2,6 +2,8 @@ extends Node
 
 
 func _on_level_complete(level_name, next_level_name):
+	#Fade.get_node("AnimationPlayer").play("Fade Out")
+	#yield(Fade.get_node("AnimationPlayer"), "animation_finished")
 	if level_name == "Credits":
 		get_tree().quit()
 	elif next_level_name != null:
