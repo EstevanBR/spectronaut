@@ -9,11 +9,12 @@ var _rotating = false
 func rotating():
 	return _rotating
 
-var _filter_color = Color(1,1,1) setget set_filter_color,get_filter_color
+export(Color) var _filter_color setget set_filter_color,get_filter_color
 
 func set_filter_color(color):
 	_filter_color = color
-	$Camera.Filter.get_surface_material(0).set("albedo_color", _filter_color)
+	if has_node("Camera/Filter"):
+		$"Camera/Filter".get_surface_material(0).set("albedo_color", _filter_color)
 func get_filter_color():
 	return _filter_color
 
@@ -35,6 +36,7 @@ func get_rotation_index():
 #	return _rotations[index]
 
 func _ready():
+	#get_node("../GZEMO").connect("gzemo_shade_changed", self, "_on_GZEMO_gzemo_shade_changed")
 	set_process_input(true)
 	set_process(true)
 	set_transform(_rotations[_rotation_index])
@@ -44,6 +46,8 @@ func _ready():
 	
 	connect("rotation_start", self, "_on_rotation_start")
 	connect("rotation_end", self, "_on_rotation_end")
+	
+	#set_filter_color(get_node("../GZEMO").get_shade())
 
 func _process(delta):
 	_progress += delta
@@ -94,3 +98,6 @@ func _on_rotation_start(direction):
 
 func _on_rotation_end():
 	_t = null
+
+func _on_GZEMO_gzemo_shade_changed(shade):
+	set_filter_color(shade)

@@ -115,46 +115,13 @@ transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 0,
 
 [node name="CameraRoot" parent="." index="4" instance=ExtResource( 5 )]
 
-[node name="EndPoint" type="Position3D" parent="." index="5"]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="6"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="5"]
 
 environment = SubResource( 1 )
 
-[node name="Helper" type="Node" parent="." index="7"]
+[node name="EditorCamera" type="Camera" parent="." index="6"]
 
-[node name="X+" type="Position3D" parent="Helper" index="0"]
-
-transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 8, 0, 0 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="X-" type="Position3D" parent="Helper" index="1"]
-
-transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, -8, 0, 0 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Y+" type="Position3D" parent="Helper" index="2"]
-
-transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 8, 0 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Y-" type="Position3D" parent="Helper" index="3"]
-
-transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, -8, 0 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Z+" type="Position3D" parent="Helper" index="4"]
-
-transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 8 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Z-" type="Position3D" parent="Helper" index="5"]
-
-transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, -8 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="EditorCamera" type="Camera" parent="." index="8"]
-
+transform = Transform( 0.707107, 0.408254, -0.577346, 0, 0.81649, 0.577359, 0.707107, -0.408254, 0.577346, -45, 45, 45 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -169,9 +136,9 @@ near = 0.05
 far = 100.0
 script = ExtResource( 6 )
 _time = 1.0
-_index = 1
+_index = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." index="9"]
+[node name="RichTextLabel" type="RichTextLabel" parent="." index="7"]
 
 visible = false
 anchor_left = 0.0
@@ -199,7 +166,7 @@ selection_enabled = false
 override_selected_font_color = false
 _sections_unfolded = [ "BBCode" ]
 
-[node name="TextureRect" type="TextureRect" parent="." index="10"]
+[node name="TextureRect" type="TextureRect" parent="." index="8"]
 
 visible = false
 anchor_left = 1.0
