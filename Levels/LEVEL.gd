@@ -29,6 +29,7 @@ func _ready():
 	set_process(true)
 	set_process_input(true)
 	get_node("GZEMO").set_shade(shade)
+	get_node("CameraRoot").set_filter_color(shade)
 	connect("level_completed", LevelSwitcher, "_on_level_complete")
 	assert(shade != null)
 

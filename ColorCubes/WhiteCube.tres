@@ -1,0 +1,31 @@
+[gd_resource type="CubeMesh" load_steps=3 format=2]
+
+[sub_resource type="Shader" id=1]
+
+code = "shader_type spatial;
+render_mode unshaded;
+
+void fragment() {
+	if (abs(NORMAL.x) == 1.0) {
+		ALBEDO = vec3(1,1,1);
+	} else if (abs(NORMAL.y) == 1.0) {
+		ALBEDO = vec3(0.66,0.66,0.66);
+	} else {
+		ALBEDO = vec3(0.33,0.33,0.33);
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+
+render_priority = 0
+shader = SubResource( 1 )
+
+[resource]
+
+material = SubResource( 2 )
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+size = Vector3( 2, 2, 2 )
+subdivide_width = 0
+subdivide_height = 0
+subdivide_depth = 0
+
