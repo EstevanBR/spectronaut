@@ -13,8 +13,7 @@ var _filter_color setget set_filter_color,get_filter_color
 
 func set_filter_color(color):
 	_filter_color = color
-	#$Camera.Filter.get_surface_material(0).set("albedo_color", _filter_color)
-	$Camera.get_node("ColorRect").material.set_shader_param("filter_color", _filter_color)
+	#$Camera.get_node("ColorRect").material.set_shader_param("filter_color", _filter_color)
 
 func get_filter_color():
 	return _filter_color
@@ -47,7 +46,7 @@ func _ready():
 	
 	connect("rotation_start", self, "_on_rotation_start")
 	connect("rotation_end", self, "_on_rotation_end")
-	$Camera.get_node("ColorRect").material.set_shader_param("filter_color", _filter_color)
+	set_filter_color(_filter_color)
 
 func _process(delta):
 	_progress += delta

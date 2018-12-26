@@ -18,7 +18,6 @@ func _ready():
 	set_translation(level_root.get_node("SpawnPoint").get_translation())
 	set_process(true)
 	set_shade(_shade)
-	emit_signal("gzemo_shade_changed")
 
 func _process(delta):
 	_walk_progress += delta
