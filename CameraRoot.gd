@@ -44,7 +44,9 @@ func _ready():
 	$Camera3.queue_free()
 	$Camera4.queue_free()
 	
+# warning-ignore:return_value_discarded
 	connect("rotation_start", self, "_on_rotation_start")
+# warning-ignore:return_value_discarded
 	connect("rotation_end", self, "_on_rotation_end")
 	set_filter_color(_filter_color)
 
@@ -92,6 +94,7 @@ func get_offset():
 	#print("g_origin: " + var2str(g_origin / g_origin.abs()))
 	return (g_origin / g_origin.abs()).round()
 
+# warning-ignore:unused_argument
 func _on_rotation_start(direction):
 	_t = get_transform()
 

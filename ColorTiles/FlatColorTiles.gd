@@ -23,6 +23,7 @@ func _ready():
 func _on_CameraRoot_rotation_end():
 	_fill()
 
+# warning-ignore:unused_argument
 func _on_CameraRoot_rotation_start(direction):
 	clear()
 

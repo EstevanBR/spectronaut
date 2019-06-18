@@ -6,6 +6,7 @@ export(String) var _next_level_name
 
 signal level_completed
 
+# warning-ignore:unused_class_variable
 var progress = 0
 
 class CanMoveResult:
@@ -30,14 +31,17 @@ func _ready():
 	set_process_input(true)
 	get_node("GZEMO").set_shade(shade)
 	get_node("CameraRoot").set_filter_color(shade)
+# warning-ignore:return_value_discarded
 	connect("level_completed", LevelSwitcher, "_on_level_complete")
 	assert(shade != null)
 
+# warning-ignore:unused_argument
 func _process(delta):
 	pass
 
 # takes a vector 3 which is the cell index for the next desired position
 func check_can_move(v, source_color):
+# warning-ignore:unused_variable
 	var can_move = false
 	var dest_color = null
 	var off = cam_root.get_offset()

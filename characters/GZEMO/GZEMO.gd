@@ -5,6 +5,7 @@ signal gzemo_shade_changed(shade)
 onready var _shade = Color(1,1,1,1) setget set_shade, get_shade
 onready var level_root = get_parent()
 onready var cam_root = get_node("../CameraRoot")
+# warning-ignore:unused_class_variable
 onready var cam = cam_root.get_node("Camera")
 onready var _last_position = get_translation()
 onready var meshes = get_node("Meshes")
